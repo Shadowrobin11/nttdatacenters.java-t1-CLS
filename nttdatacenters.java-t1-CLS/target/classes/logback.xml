@@ -1,0 +1,40 @@
+<configuration debug="true">
+
+	<!-- VARIABLE ASOCIADA A LA FECHA -->
+	<timestamp key="logDateVar" datePattern="dd-MM-yyyy" />
+	
+	<!-- ROLLINGFILEAPPENDER -->
+	<appender name="TuberiaEjemploLogbackT1"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		
+		<!-- NOMBRE DEL FICHERO EN EL QUE DESEMBOCA LA TUBERÍA -->
+		<file>C://dev//logs//CLS16-05-${logDateVar}.log</file>
+		
+		<!-- POLÍTICA CON LA QUE TROCEAMOS O GESTIONAMOS EL FICHERO -->
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>C://dev//logs//CLS16-05-${logDateVar}.%i.logDual.zip</fileNamePattern>
+			
+			<!-- CANTIDAD DE FICHEROS (TROCEADOS) -->
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+
+		<!-- ¿CADA CUÁNTO DEBE SALTAR LA POLÍTICA DE TROCEADO? -->
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>500KB</maxFileSize>
+		</triggeringPolicy>
+		
+		<!-- AQUÍ PODRÍAMOS TENER UN LAYOUT PERSONALIZADO EN UNA CLASE JAVA -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%method] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- EL NIVEL DETERMINA LO ESTRECHA QUE PUEDA SER LA TUBERÍA -->
+	<root level="debug">
+		<appender-ref ref="TuberiaEjemploLogbackT1" />
+	</root>
+
+</configuration>
